@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Medical.User.Infra.Persistence.Configurations
 {
     public class SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : DbContext(options)
-    {   
+    {
         public DbSet<UserProfile> Users { get; set; }
         public DbSet<AccessHistory> AccessHistories { get; set; }
 

@@ -18,10 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Medical.User.Application\Medical.User.Application.csproj" />
     <ProjectReference Include="..\Medical.User.Infra\Medical.User.Infra.csproj" />
   </ItemGroup>
 

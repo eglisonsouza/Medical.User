@@ -1,9 +1,11 @@
+using Medical.User.Application.Extensions;
 using Medical.User.Infra.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddInfra(builder.Configuration);
+builder.Services.AddApplication();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

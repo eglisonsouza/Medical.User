@@ -1,7 +1,9 @@
-﻿using Medical.User.Infra.Persistence.Configurations;
+﻿using Medical.User.Domain.Common.Repositories;
+using Medical.User.Infra.Persistence;
+using Medical.User.Infra.Persistence.Configurations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
 namespace Medical.User.Infra.Extensions
 {
@@ -10,6 +12,7 @@ namespace Medical.User.Infra.Extensions
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDatabase(configuration);
+            services.AddRepositories();
             return services;
         }
 
@@ -18,6 +21,11 @@ namespace Medical.User.Infra.Extensions
             services.AddDbContext<SqlServerDbContext>(options =>
                 options.UseSqlServer(configuration.GetSection("Settings").GetConnectionString("SqlServerConnection"),
                     b => b.MigrationsAssembly(typeof(SqlServerDbContext).Assembly.FullName)));
+        }
+
+        private static void AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped(typeof(IAddRepository<>), typeof(GenericRepository<>));
         }
     }
 }

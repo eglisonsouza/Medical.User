@@ -1,7 +1,8 @@
 ﻿namespace Medical.User.Domain.Common.Models
 {
-    public interface ICommonInputModel<in T, out O>
+    public interface ICommonInputModel<TEntity>
+        where TEntity : class
     {
-        O ToEntity(T model);
+        TEntity ToEntity();
     }
 }
