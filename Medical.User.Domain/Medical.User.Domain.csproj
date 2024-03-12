@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Building Blocks\Smart.Essentials.Security\Smart.Essentials.Security.csproj" />
+  </ItemGroup>
+
 </Project>

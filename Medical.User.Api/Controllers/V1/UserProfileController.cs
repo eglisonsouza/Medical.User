@@ -21,5 +21,11 @@ namespace Medical.User.Api.Controllers.V1
         {
             return Ok(await _service.Login(model));
         }
+
+        [HttpPut("login")]
+        public async Task<IActionResult> update(UserInputModel model)
+        {
+            return Ok(await _service.UpdateAsync(model));
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Medical.User.Domain.Common.Repositories;
+using Medical.User.Domain.Repositories;
+using Medical.User.Domain.Services;
 using Medical.User.Infra.Persistence;
 using Medical.User.Infra.Persistence.Configurations;
+using Medical.User.Infra.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +28,7 @@ namespace Medical.User.Infra.Extensions
 
         private static void AddRepositories(this IServiceCollection services)
         {
+            services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped(typeof(IAddRepository<>), typeof(GenericRepository<>));
         }
     }

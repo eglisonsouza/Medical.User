@@ -2,6 +2,7 @@
 using Medical.User.Domain.Models.Arguments.InputModels;
 using Medical.User.Domain.Models.Arguments.ViewModels;
 using Medical.User.Domain.Models.Entities;
+using Medical.User.Domain.Repositories;
 using Medical.User.Domain.Services;
 using Smart.Essentials.Security;
 
@@ -9,11 +10,11 @@ namespace Medical.User.Application.Service
 {
     public class UserProfileService(
         IAddRepository<UserProfile> addRepository,
-        ILoginRepository<UserProfile> loginRepository
+        ILoginRepository loginRepository
         ) : IUserProfileService
     {
         private readonly IAddRepository<UserProfile> _addRepository = addRepository;
-        private readonly ILoginRepository<UserProfile> _loginRepository = loginRepository;
+        private readonly ILoginRepository _loginRepository = loginRepository;
 
         public async Task<UserViewModel> AddAsync(UserInputModel model)
         {
@@ -24,11 +25,26 @@ namespace Medical.User.Application.Service
             return UserViewModel.FromEntity(entity);
         }
 
-        public async Task<LoginViewModel> Login(LoginInputModel model)
+        public async Task<TokenViewModel> Login(LoginInputModel model)
         {
-            var entity = await _loginRepository.LoginAsync(model);
+            var user = await _loginRepository.LoginAsync(model.ToEntity());
 
-            return new LoginViewModel();
+            var tokenDto = TokenService.GenerateToken(user.Email, user.Role.ToString(), user.Id, user.Username);
+
+            return new TokenViewModel()
+            {
+                Email = user.Email,
+                Role = user.Role,
+                UrlProfile = user.UrlProfile,
+                Username = user.Username,
+                Token = tokenDto.Token,
+                RefressToken = tokenDto.RefressToken
+            };
+        }
+
+        public Task<UserViewModel> UpdateAsync(UserInputModel model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

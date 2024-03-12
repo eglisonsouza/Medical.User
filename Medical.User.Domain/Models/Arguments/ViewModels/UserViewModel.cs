@@ -14,7 +14,8 @@ namespace Medical.User.Domain.Models.Arguments.ViewModels
                 Id = entity.Id,
                 Username = entity.Username,
                 UrlProfile = entity.UrlProfile,
-                Role = entity.Role
+                Role = entity.Role,
+                Email = entity.Email
             };
         }
     }

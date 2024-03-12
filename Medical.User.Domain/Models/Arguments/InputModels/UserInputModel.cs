@@ -10,7 +10,7 @@ namespace Medical.User.Domain.Models.Arguments.InputModels
 
         public UserProfile ToEntity()
         {
-            return new UserProfile(Username, Password, UrlProfile, Role);
+            return new UserProfile(Username, Password, UrlProfile, Role, Email);
         }
     }
 }

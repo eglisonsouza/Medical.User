@@ -14,9 +14,11 @@ namespace Medical.User.Infra.Persistence.Configurations.EntitiesConfiguration
 
             builder.Property(x => x.Password).IsRequired();
 
-            builder.Property(x => x.UrlProfile).IsRequired();
+            builder.Property(x => x.UrlProfile);
 
             builder.Property(x => x.Role).IsRequired();
+
+            builder.Property(x => x.Email).IsRequired();
         }
     }
 }
