@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Smart.Essentials.HealthCheck.SqlServer.DependencyInjection;
 
 namespace Medical.User.Infra.Extensions
 {
@@ -10,6 +11,7 @@ namespace Medical.User.Infra.Extensions
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDatabase(configuration);
+            services.AddHealthChecksInfra(configuration);
             return services;
         }
 
@@ -18,6 +20,11 @@ namespace Medical.User.Infra.Extensions
             services.AddDbContext<SqlServerDbContext>(options =>
                 options.UseSqlServer(configuration.GetSection("Settings").GetConnectionString("SqlServerConnection"),
                     b => b.MigrationsAssembly(typeof(SqlServerDbContext).Assembly.FullName)));
+        }
+
+        private static void AddHealthChecksInfra(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddHealthChecks().AddSqlServer(configuration.GetSection("Settings").GetConnectionString("SqlServerConnection")!);
         }
     }
 }
