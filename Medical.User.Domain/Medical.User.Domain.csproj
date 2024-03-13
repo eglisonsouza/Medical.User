@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Building Blocks\Smart.Essentials.Security\Smart.Essentials.Security.csproj" />
+    <ProjectReference Include="..\..\..\..\Building Blocks\Smart.Essentials.Security.Cryptography\Smart.Essentials.Security.Cryptography.csproj" />
   </ItemGroup>
 
 </Project>
