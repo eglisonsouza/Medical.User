@@ -1,6 +1,6 @@
 ﻿using Medical.User.Domain.Models.Entities;
 using Medical.User.Domain.Models.Enuns;
-using Smart.Essentials.Security;
+using Smart.Essentials.Security.Cryptography;
 
 namespace Medical.User.Domain.Models.Arguments.InputModels
 {

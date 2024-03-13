@@ -25,7 +25,7 @@ namespace Medical.User.Application.Service
 
         public async Task<TokenViewModel> Login(LoginInputModel model)
         {
-            var entity = await _context.Users.SingleAsync(u => u.Username.Equals(model.Username) && u.Password.Equals(model.Password) && u.Role.Equals(model.Role));
+            var entity = await _context.Users.SingleAsync(u => u.Username.Equals(model.Username) && u.Password.Equals(model.Password.To256Hash()) && u.Role.Equals(model.Role));
 
             var tokenDto = TokenService.GenerateToken(entity.Email, entity.Role.ToString(), entity.Id, entity.Username);
 
@@ -48,7 +48,7 @@ namespace Medical.User.Application.Service
                 setters =>
                 setters
                    .SetProperty(p => p.Username, model.Username)
-                   .SetProperty(p => p.Password, model.Password)
+                   .SetProperty(p => p.Password, model.Password.To256Hash())
                    .SetProperty(p => p.Email, model.Email)
                    .SetProperty(p => p.UrlProfile, model.UrlProfile)
                    .SetProperty(p => p.Role, model.Role)
