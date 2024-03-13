@@ -8,7 +8,7 @@ namespace Medical.User.Api.Controllers.V1
     [Route("api/v1/user-profile")]
     public class UserProfileController(IUserProfileService service) : ControllerBase
     {
-        private readonly IUserProfileService _service = service;        
+        private readonly IUserProfileService _service = service;
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserInputModel model)
@@ -22,10 +22,11 @@ namespace Medical.User.Api.Controllers.V1
             return Ok(await _service.Login(model));
         }
 
-        [HttpPut("login")]
-        public async Task<IActionResult> update(UserInputModel model)
+        [HttpPut("{id}")]
+        public IActionResult Update(Guid id, UserInputModel model)
         {
-            return Ok(await _service.UpdateAsync(model));
+            _service.Update(id, model);
+            return NoContent();
         }
     }
 }

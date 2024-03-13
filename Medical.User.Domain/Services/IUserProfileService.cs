@@ -7,6 +7,6 @@ namespace Medical.User.Domain.Services
     {
         Task<UserViewModel> AddAsync(UserInputModel model);
         Task<TokenViewModel> Login(LoginInputModel model);
-        Task<UserViewModel> UpdateAsync(UserInputModel model);
+        void Update(Guid id, UserInputModel model);
     }
 }
