@@ -1,15 +1,21 @@
+using Medical.User.Application.Extensions;
+using Medical.User.Infra.Extensions;
+using Smart.Essentials.Security.Jwt;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddInfra(builder.Configuration);
+builder.Services.AddApplication();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.ConfigureJwt();
+builder.Services.ConfigureSwagger();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.MapHealthChecks("/health");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -18,6 +24,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
