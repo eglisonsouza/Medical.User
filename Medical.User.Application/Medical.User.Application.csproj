@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Building Blocks\Smart.Essentials.Security.Cryptography\Smart.Essentials.Security.Cryptography.csproj" />
-    <ProjectReference Include="..\..\..\..\Building Blocks\Smart.Essentials.Security.Jwt\Smart.Essentials.Security.Jwt.csproj" />
+    <ProjectReference Include="..\..\..\Building Blocks\Smart.Essentials.Security.Jwt\Smart.Essentials.Security.Jwt.csproj" />
     <ProjectReference Include="..\Medical.User.Domain\Medical.User.Domain.csproj" />
     <ProjectReference Include="..\Medical.User.Infra\Medical.User.Infra.csproj" />
   </ItemGroup>

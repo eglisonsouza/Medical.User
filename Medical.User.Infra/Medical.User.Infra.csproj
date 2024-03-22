@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Building Blocks\Smart.Essentials.HealthCheck.SqlServer\Smart.Essentials.HealthCheck.SqlServer.csproj" />
+    <ProjectReference Include="..\..\..\Building Blocks\Smart.Essentials.HealthCheck.SqlServer\Smart.Essentials.HealthCheck.SqlServer.csproj" />
     <ProjectReference Include="..\Medical.User.Domain\Medical.User.Domain.csproj" />
   </ItemGroup>
 
