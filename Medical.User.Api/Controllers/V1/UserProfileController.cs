@@ -1,4 +1,5 @@
-﻿using Medical.User.Domain.Models.Arguments.InputModels;
+﻿using Medical.User.Api.Controllers.Base;
+using Medical.User.Domain.Models.Arguments.InputModels;
 using Medical.User.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ namespace Medical.User.Api.Controllers.V1
     [Authorize]
     [ApiController]
     [Route("api/v1/user-profile")]
-    public class UserProfileController(IUserProfileService service) : ControllerBase
+    public sealed class UserProfileController(IUserProfileService service, IHttpContextAccessor accessor) : BaseController(accessor)
     {
         private readonly IUserProfileService _service = service;
 
@@ -23,13 +24,13 @@ namespace Medical.User.Api.Controllers.V1
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginInputModel model)
         {
-            return Ok(await _service.Login(model));
+            return Ok(await _service.LoginAsync(model));
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(Guid id, UserInputModel model)
+        [HttpPut]
+        public IActionResult Update(UserInputModel model)
         {
-            _service.Update(id, model);
+            _service.Update(GetId(), model);
             return NoContent();
         }
     }

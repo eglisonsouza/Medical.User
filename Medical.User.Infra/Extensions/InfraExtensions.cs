@@ -1,4 +1,6 @@
-﻿using Medical.User.Infra.Persistence.Configurations;
+﻿using Medical.User.Domain.Repositories;
+using Medical.User.Infra.Persistence.Configurations;
+using Medical.User.Infra.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +14,7 @@ namespace Medical.User.Infra.Extensions
         {
             services.AddDatabase(configuration);
             services.AddHealthChecksInfra(configuration);
+            services.AddRepositories();
             return services;
         }
 
@@ -25,6 +28,11 @@ namespace Medical.User.Infra.Extensions
         private static void AddHealthChecksInfra(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddHealthChecks().AddSqlServer(configuration.GetSection("Settings").GetConnectionString("SqlServerConnection")!);
+        }
+
+        private static void AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

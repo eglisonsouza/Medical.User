@@ -1,5 +1,6 @@
 ﻿using Medical.User.Domain.Models.Arguments.BaseModels;
 using Medical.User.Domain.Models.Entities;
+using Smart.Essentials.Security.Cryptography;
 
 namespace Medical.User.Domain.Models.Arguments.InputModels
 {
@@ -9,7 +10,7 @@ namespace Medical.User.Domain.Models.Arguments.InputModels
 
         public UserProfile ToEntity()
         {
-            return new UserProfile(Username, Password, UrlProfile, Role, Email);
+            return new UserProfile(Username, Password.To256Hash(), UrlProfile, Role, Email);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Medical.User.Domain.Models.Arguments.InputModels
 
         public UserProfile ToEntity()
         {
-            return new UserProfile(Username, PasswordService.ComputeSha256Hash(Password), string.Empty, Role, string.Empty);
+            return new UserProfile(Username, Password.To256Hash(), string.Empty, Role, string.Empty);
         }
     }
 }

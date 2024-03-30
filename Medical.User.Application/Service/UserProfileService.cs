@@ -1,31 +1,30 @@
-﻿using Medical.User.Domain.Models.Arguments.InputModels;
+﻿using Medical.User.Domain.Constraints;
+using Medical.User.Domain.Exceptions;
+using Medical.User.Domain.Models.Arguments.InputModels;
 using Medical.User.Domain.Models.Arguments.ViewModels;
+using Medical.User.Domain.Repositories;
 using Medical.User.Domain.Services;
-using Medical.User.Infra.Persistence.Configurations;
-using Microsoft.EntityFrameworkCore;
-using Smart.Essentials.Security.Cryptography;
 using Smart.Essentials.Security.Jwt;
 
 namespace Medical.User.Application.Service
 {
-    public class UserProfileService(SqlServerDbContext context) : IUserProfileService
+    public sealed class UserProfileService(IUserRepository repository) : IUserProfileService
     {
-        private readonly SqlServerDbContext _context = context;
+        private readonly IUserRepository _repository = repository;
 
         public async Task<UserViewModel> AddAsync(UserInputModel model)
         {
-            model.Password = PasswordService.ComputeSha256Hash(model.Password);
+            if (_repository.IsUsernameExist(model.Username))
+                throw new DomainException(ExceptionsMessages.UsernameIsInvalid);
 
-            var result = await _context.Users.AddAsync(model.ToEntity());
+            var entity = await _repository.AddAsync(model.ToEntity());
 
-            await _context.SaveChangesAsync();
-
-            return UserViewModel.FromEntity(result.Entity);
+            return UserViewModel.FromEntity(entity);
         }
 
-        public async Task<TokenViewModel> Login(LoginInputModel model)
+        public async Task<TokenViewModel> LoginAsync(LoginInputModel model)
         {
-            var entity = await _context.Users.SingleAsync(u => u.Username.Equals(model.Username) && u.Password.Equals(model.Password.To256Hash()) && u.Role.Equals(model.Role));
+            var entity = await _repository.LoginAsync(model.ToEntity());
 
             var tokenDto = TokenService.GenerateToken(entity.Email, entity.Role.ToString(), entity.Id, entity.Username);
 
@@ -42,17 +41,7 @@ namespace Medical.User.Application.Service
 
         public void Update(Guid id, UserInputModel model)
         {
-            _context.Users
-               .Where(p => p.Id.Equals(id))
-               .ExecuteUpdate(
-                setters =>
-                setters
-                   .SetProperty(p => p.Username, model.Username)
-                   .SetProperty(p => p.Password, model.Password.To256Hash())
-                   .SetProperty(p => p.Email, model.Email)
-                   .SetProperty(p => p.UrlProfile, model.UrlProfile)
-                   .SetProperty(p => p.Role, model.Role)
-               );
+            _repository.Update(id, model.ToEntity());
         }
     }
 }
