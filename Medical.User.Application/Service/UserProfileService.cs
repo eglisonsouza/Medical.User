@@ -1,9 +1,8 @@
-﻿using Medical.User.Domain.Constraints;
+﻿using Medical.User.Application.Models.InputModels;
+using Medical.User.Application.Models.ViewModels;
+using Medical.User.Domain.Constraints;
 using Medical.User.Domain.Exceptions;
-using Medical.User.Domain.Models.Arguments.InputModels;
-using Medical.User.Domain.Models.Arguments.ViewModels;
 using Medical.User.Domain.Repositories;
-using Medical.User.Domain.Services;
 using Smart.Essentials.Security.Jwt;
 
 namespace Medical.User.Application.Service

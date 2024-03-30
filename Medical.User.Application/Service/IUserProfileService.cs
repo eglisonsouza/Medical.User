@@ -1,7 +1,7 @@
-﻿using Medical.User.Domain.Models.Arguments.InputModels;
-using Medical.User.Domain.Models.Arguments.ViewModels;
+﻿using Medical.User.Application.Models.InputModels;
+using Medical.User.Application.Models.ViewModels;
 
-namespace Medical.User.Domain.Services
+namespace Medical.User.Application.Service
 {
     public interface IUserProfileService
     {

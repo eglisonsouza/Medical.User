@@ -1,6 +1,6 @@
 ﻿using Medical.User.Api.Controllers.Base;
-using Medical.User.Domain.Models.Arguments.InputModels;
-using Medical.User.Domain.Services;
+using Medical.User.Application.Models.InputModels;
+using Medical.User.Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

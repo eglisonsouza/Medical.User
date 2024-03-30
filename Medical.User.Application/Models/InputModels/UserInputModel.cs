@@ -1,8 +1,8 @@
-﻿using Medical.User.Domain.Models.Arguments.BaseModels;
+﻿using Medical.User.Application.Models.BaseModels;
 using Medical.User.Domain.Models.Entities;
 using Smart.Essentials.Security.Cryptography;
 
-namespace Medical.User.Domain.Models.Arguments.InputModels
+namespace Medical.User.Application.Models.InputModels
 {
     public class UserInputModel : UserBaseModel
     {

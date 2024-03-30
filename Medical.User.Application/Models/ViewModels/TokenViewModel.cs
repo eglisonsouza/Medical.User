@@ -1,6 +1,6 @@
-﻿using Medical.User.Domain.Models.Arguments.BaseModels;
+﻿using Medical.User.Application.Models.BaseModels;
 
-namespace Medical.User.Domain.Models.Arguments.ViewModels
+namespace Medical.User.Application.Models.ViewModels
 {
     public class TokenViewModel : UserBaseModel
     {

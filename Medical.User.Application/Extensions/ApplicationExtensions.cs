@@ -1,5 +1,4 @@
 ﻿using Medical.User.Application.Service;
-using Medical.User.Domain.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Medical.User.Application.Extensions

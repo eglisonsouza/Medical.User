@@ -1,6 +1,6 @@
 ﻿using Medical.User.Domain.Models.Enuns;
 
-namespace Medical.User.Domain.Models.Arguments.BaseModels
+namespace Medical.User.Application.Models.BaseModels
 {
     public class UserBaseModel
     {
