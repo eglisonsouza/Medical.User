@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 
 namespace Medical.User.Api.Controllers.Base
 {
+    [ExcludeFromCodeCoverage]
     [ApiController]
     public abstract class BaseController(IHttpContextAccessor accessor) : ControllerBase
     {

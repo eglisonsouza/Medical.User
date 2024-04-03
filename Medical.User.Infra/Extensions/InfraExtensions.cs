@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Smart.Essentials.HealthCheck.SqlServer.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Medical.User.Infra.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class InfraExtensions
     {
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration configuration)

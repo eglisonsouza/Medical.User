@@ -23,7 +23,8 @@ namespace Medical.User.Application.Service
 
         public async Task<TokenViewModel> LoginAsync(LoginInputModel model)
         {
-            var entity = await _repository.LoginAsync(model.ToEntity());
+            var entity = await _repository.LoginAsync(model.ToEntity())
+                ?? throw new DomainException(ExceptionsMessages.UsernameOrPasswordIsInvalid);
 
             var tokenDto = TokenService.GenerateToken(entity.Email, entity.Role.ToString(), entity.Id, entity.Username);
 

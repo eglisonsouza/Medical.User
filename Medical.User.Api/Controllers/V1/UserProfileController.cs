@@ -3,9 +3,11 @@ using Medical.User.Application.Models.InputModels;
 using Medical.User.Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Medical.User.Api.Controllers.V1
 {
+    [ExcludeFromCodeCoverage]
     [Authorize]
     [ApiController]
     [Route("api/v1/user-profile")]

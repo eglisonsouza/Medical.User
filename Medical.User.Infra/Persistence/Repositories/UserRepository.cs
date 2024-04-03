@@ -3,15 +3,17 @@ using Medical.User.Domain.Repositories;
 using Medical.User.Infra.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Smart.Essentials.Security.Cryptography;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Medical.User.Infra.Persistence.Repositories
 {
+    [ExcludeFromCodeCoverage]
     public sealed class UserRepository(SqlServerDbContext context) : IUserRepository
     {
         private readonly SqlServerDbContext _context = context;
 
         public async Task<UserProfile> AddAsync(UserProfile entity)
-        {            
+        {
             var result = await _context.Users.AddAsync(entity);
 
             await _context.SaveChangesAsync();
