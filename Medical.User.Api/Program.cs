@@ -1,10 +1,24 @@
 using Medical.User.Application.Extensions;
 using Medical.User.Infra.Extensions;
+using Smart.Essentials.Filters;
 using Smart.Essentials.Security.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services
+    .AddControllers
+    (
+        options =>
+        {
+            options.Filters.Add(typeof(DefaultExceptionFilterAttribute));
+            options.Filters.Add(typeof(ValidationFilter));
+        }
+    )
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
 builder.Services.AddInfra(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddEndpointsApiExplorer();

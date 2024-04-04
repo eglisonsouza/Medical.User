@@ -1,11 +1,10 @@
-﻿using Medical.User.Application.Models.ViewModels;
-using Medical.User.Application.Service;
-using Medical.User.Domain.Exceptions;
+﻿using Medical.User.Application.Service;
 using Medical.User.Domain.Models.Entities;
 using Medical.User.Domain.Repositories;
 using Medical.User.UnitTest.Mock;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using Smart.Essentials.Core.ResultDataModel;
 
 namespace Medical.User.UnitTest.Services
 {
@@ -32,8 +31,11 @@ namespace Medical.User.UnitTest.Services
             var result = await _service.AddAsync(model);
 
             // Assert
+            _repository.Received(1).IsUsernameExist(Arg.Any<string>());
+            await _repository.Received(1).AddAsync(Arg.Any<UserProfile>());
             Assert.NotNull(result);
-            Assert.IsType<UserViewModel>(result);
+            Assert.IsType<ResultModel>(result);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
@@ -44,8 +46,15 @@ namespace Medical.User.UnitTest.Services
             _repository.IsUsernameExist(model.Username).Returns(true);
             _repository.AddAsync(Arg.Any<UserProfile>()).Returns(UserMocks.GetUserEntity());
 
+            //Act
+            var result = await _service.AddAsync(model);
+
             // Assert
-            await Assert.ThrowsAsync<DomainException>(async () => await _service.AddAsync(model));
+            _repository.Received(1).IsUsernameExist(Arg.Any<string>());
+            await _repository.Received(0).AddAsync(Arg.Any<UserProfile>());
+            Assert.NotNull(result);
+            Assert.IsType<ResultModel>(result);
+            Assert.False(result.IsSuccess);
         }
 
         [Fact]
@@ -59,8 +68,10 @@ namespace Medical.User.UnitTest.Services
             var result = await _service.LoginAsync(model);
 
             // Assert
+            await _repository.Received(1).LoginAsync(Arg.Any<UserProfile>());
             Assert.NotNull(result);
-            Assert.IsType<TokenViewModel>(result);
+            Assert.IsType<ResultModel>(result);
+            Assert.True(result.IsSuccess);
         }
 
         [Fact]
@@ -70,8 +81,14 @@ namespace Medical.User.UnitTest.Services
             var model = UserMocks.GetLoginInputModel();
             _repository.LoginAsync(Arg.Any<UserProfile>()).ReturnsNull();
 
-            // Act
-            await Assert.ThrowsAsync<DomainException>(async () => await _service.LoginAsync(model));
+            //Act
+            var result = await _service.LoginAsync(model);
+
+            // Assert
+            await _repository.Received(1).LoginAsync(Arg.Any<UserProfile>());
+            Assert.NotNull(result);
+            Assert.IsType<ResultModel>(result);
+            Assert.False(result.IsSuccess);
         }
 
         [Fact]
@@ -82,10 +99,13 @@ namespace Medical.User.UnitTest.Services
             var model = UserMocks.GetUserInputModel();
 
             // Act
-            _service.Update(id, model);
+            var result = _service.Update(id, model);
 
             // Assert
             _repository.Received(1).Update(id, Arg.Any<UserProfile>());
+            Assert.NotNull(result);
+            Assert.IsType<ResultModel>(result);
+            Assert.True(result.IsSuccess);
         }
     }
 
