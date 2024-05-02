@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Medical.User.Infra.Persistence.Configurations
 {
     [ExcludeFromCodeCoverage]
-    public class SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : DbContext(options)
+    public sealed class SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : DbContext(options)
     {
         public DbSet<UserProfile> Users { get; set; }
         public DbSet<AccessHistory> AccessHistories { get; set; }

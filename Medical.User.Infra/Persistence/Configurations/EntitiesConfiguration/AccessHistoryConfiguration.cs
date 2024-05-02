@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Medical.User.Infra.Persistence.Configurations.EntitiesConfiguration
 {
     [ExcludeFromCodeCoverage]
-    public class AccessHistoryConfiguration : IEntityTypeConfiguration<AccessHistory>
+    public sealed class AccessHistoryConfiguration : IEntityTypeConfiguration<AccessHistory>
     {
         public void Configure(EntityTypeBuilder<AccessHistory> builder)
         {

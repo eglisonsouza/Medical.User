@@ -6,6 +6,7 @@ using Smart.Essentials.Security.Jwt;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddApplication();
 builder.Services
     .AddControllers
     (
@@ -20,7 +21,6 @@ builder.Services
         options.SuppressModelStateInvalidFilter = true;
     });
 builder.Services.AddInfra(builder.Configuration);
-builder.Services.AddApplication();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureJwt();
 builder.Services.ConfigureSwagger();

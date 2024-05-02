@@ -1,4 +1,5 @@
-﻿using Medical.User.Application.Service;
+﻿using AutoMapper;
+using Medical.User.Application.Service;
 using Medical.User.Domain.Models.Entities;
 using Medical.User.Domain.Repositories;
 using Medical.User.UnitTest.Mock;
@@ -8,15 +9,18 @@ using Smart.Essentials.Core.ResultDataModel;
 
 namespace Medical.User.UnitTest.Services
 {
-    public class UserProfileServiceTests
+    public sealed class UserProfileServiceTests
     {
         private readonly IUserRepository _repository;
         private readonly UserProfileService _service;
+        private readonly IMapper _mapper;
+
 
         public UserProfileServiceTests()
         {
             _repository = Substitute.For<IUserRepository>();
-            _service = new UserProfileService(_repository);
+            _mapper = Substitute.For<IMapper>();
+            _service = new UserProfileService(_repository, _mapper);
         }
 
         [Fact]

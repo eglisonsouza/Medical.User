@@ -2,7 +2,7 @@
 
 namespace Medical.User.Application.Models.BaseModels
 {
-    public class UserBaseModel
+    public abstract class UserBaseModel
     {
         public string Username { get; set; }
         public string Email { get; set; }

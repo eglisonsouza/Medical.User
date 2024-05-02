@@ -2,13 +2,13 @@
 
 namespace Medical.User.Domain.Models.Entities
 {
-    public class UserProfile(string username, string password, string urlProfile, RoleType role, string email)
+    public sealed class UserProfile()
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
-        public string Username { get; private set; } = username;
-        public string Password { get; private set; } = password;
-        public string Email { get; private set; } = email;
-        public string UrlProfile { get; private set; } = urlProfile;
-        public RoleType Role { get; private set; } = role;
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string UrlProfile { get; set; }
+        public RoleType Role { get; set; }
     }
 }

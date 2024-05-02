@@ -2,7 +2,6 @@
 using Medical.User.Domain.Repositories;
 using Medical.User.Infra.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using Smart.Essentials.Security.Cryptography;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Medical.User.Infra.Persistence.Repositories
@@ -21,9 +20,9 @@ namespace Medical.User.Infra.Persistence.Repositories
             return result.Entity;
         }
 
-        public Task<UserProfile> LoginAsync(UserProfile entity)
+        public Task<UserProfile?> LoginAsync(UserProfile entity)
         {
-            return _context.Users.SingleAsync(u => u.Username.Equals(entity.Username) && u.Password.Equals(entity.Password) && u.Role.Equals(entity.Role));
+            return _context.Users.SingleOrDefaultAsync(u => u.Username.Equals(entity.Username) && u.Password.Equals(entity.Password) && u.Role.Equals(entity.Role))!;
         }
 
         public void Update(Guid id, UserProfile entity)
@@ -34,7 +33,7 @@ namespace Medical.User.Infra.Persistence.Repositories
                 setters =>
                 setters
                    .SetProperty(p => p.Username, entity.Username)
-                   .SetProperty(p => p.Password, entity.Password.To256Hash())
+                   .SetProperty(p => p.Password, entity.Password)
                    .SetProperty(p => p.Email, entity.Email)
                    .SetProperty(p => p.UrlProfile, entity.UrlProfile)
                    .SetProperty(p => p.Role, entity.Role)
@@ -43,7 +42,7 @@ namespace Medical.User.Infra.Persistence.Repositories
 
         public bool IsUsernameExist(string username)
         {
-            return _context.Users.Where(u => u.Username.Equals(username)).Count() > 0;
+            return _context.Users.Any(u => u.Username.Equals(username));
         }
     }
 }

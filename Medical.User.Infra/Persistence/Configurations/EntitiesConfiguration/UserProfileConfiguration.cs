@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Medical.User.Infra.Persistence.Configurations.EntitiesConfiguration
 {
     [ExcludeFromCodeCoverage]
-    public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
+    public sealed class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
     {
         public void Configure(EntityTypeBuilder<UserProfile> builder)
         {

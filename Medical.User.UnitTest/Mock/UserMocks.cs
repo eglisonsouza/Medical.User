@@ -20,12 +20,18 @@ namespace Medical.User.UnitTest.Mock
 
         public static UserProfile GetUserEntity()
         {
-            return new UserProfile("username", "password", "urlProfile", RoleType.Doctor, "email");
+            return new UserProfile
+            {
+                Email = "eglison.souza@gmail.com",
+                Password = "289160db0d9f39f9ae1754c4ec9c16f90b50e32e09c5fb5481ae642b3d3d1a36",
+                Role = RoleType.Doctor,
+                Username = "eglisonsouza"
+            };
         }
 
         public static LoginInputModel GetLoginInputModel()
         {
-            return new LoginInputModel { Username = "TestUser", Password = "TestPassword" };
+            return new LoginInputModel { Username = "TestUser", Password = "TestPassword", Role = RoleType.Doctor };
         }
     }
 }
