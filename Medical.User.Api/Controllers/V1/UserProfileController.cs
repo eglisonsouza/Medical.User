@@ -3,6 +3,7 @@ using Medical.User.Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smart.Essentials.Controller;
+using Smart.Essentials.Core.ResultDataModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Medical.User.Api.Controllers.V1
@@ -19,21 +20,21 @@ namespace Medical.User.Api.Controllers.V1
         [AllowAnonymous]
         public async Task<IActionResult> Register(UserInputModel model)
         {
-            return HandleResult(await _service.AddAsync(model));
+            return Ok(ResultModel.WithSuccessfully((await _service.AddAsync(model))!));
         }
 
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginInputModel model)
         {
-            return HandleResult(await _service.LoginAsync(model));
+            return Ok(ResultModel.WithSuccessfully((await _service.LoginAsync(model))!));
         }
 
         [HttpPut]
         public IActionResult Update(UserInputModel model)
         {
-            var result = _service.Update(GetId(), model);
-            return HandleResult(result);
+            _service.Update(GetId(), model);
+            return Ok(ResultModel.WithSuccessfully());
         }
     }
 }

@@ -9,31 +9,38 @@ using Smart.Essentials.Security.Jwt;
 
 namespace Medical.User.Application.Service
 {
-    public sealed class UserProfileService(IUserRepository repository, IMapper mapper) : IUserProfileService
+    public sealed class UserProfileService(IUserRepository repository, IMapper mapper, NotificationContext notificationContext) : IUserProfileService
     {
         private readonly IUserRepository _repository = repository;
         private readonly IMapper _mapper = mapper;
+        private readonly NotificationContext _notificationContext = notificationContext;
 
-        public async Task<ResultModel> AddAsync(UserInputModel model)
+        public async Task<UserViewModel?> AddAsync(UserInputModel model)
         {
             if (_repository.IsUsernameExist(model.Username))
-                return ResultModel.WithErrors([ExceptionsMessages.UsernameIsInvalid]);
+            {
+                _notificationContext.AddError(ExceptionsMessages.UsernameIsInvalid);
+                return null;
+            }
 
             var entity = await _repository.AddAsync(_mapper.Map<UserProfile>(model));
 
-            return ResultModel.WithSuccessfully(_mapper.Map<UserViewModel>(entity));
+            return _mapper.Map<UserViewModel>(entity);
         }
 
-        public async Task<ResultModel> LoginAsync(LoginInputModel model)
+        public async Task<TokenViewModel?> LoginAsync(LoginInputModel model)
         {
             var entity = await _repository.LoginAsync(_mapper.Map<UserProfile>(model));
 
             if (entity is null)
-                return ResultModel.WithErrors([ExceptionsMessages.UsernameOrPasswordIsInvalid]);
+            {
+                _notificationContext.AddError(ExceptionsMessages.UsernameOrPasswordIsInvalid);
+                return null;
+            }
 
             var tokenDto = TokenService.GenerateToken(entity.Email, entity.Role.ToString(), entity.Id, entity.Username);
 
-            var tokenViewModel = new TokenViewModel()
+            return new TokenViewModel()
             {
                 Email = entity.Email,
                 Role = entity.Role,
@@ -42,15 +49,11 @@ namespace Medical.User.Application.Service
                 Token = tokenDto.Token,
                 RefressToken = tokenDto.RefressToken
             };
-
-            return ResultModel.WithSuccessfully(tokenViewModel);
         }
 
-        public ResultModel Update(Guid id, UserInputModel model)
+        public void Update(Guid id, UserInputModel model)
         {
             _repository.Update(id, _mapper.Map<UserProfile>(model));
-
-            return ResultModel.WithSuccessfully();
         }
     }
 }

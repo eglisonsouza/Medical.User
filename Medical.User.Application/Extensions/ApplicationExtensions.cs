@@ -1,6 +1,7 @@
 ﻿using Medical.User.Application.Models.Mappings;
 using Medical.User.Application.Service;
 using Microsoft.Extensions.DependencyInjection;
+using Smart.Essentials.Core.ResultDataModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Medical.User.Application.Extensions
@@ -11,6 +12,7 @@ namespace Medical.User.Application.Extensions
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMapping();
+            services.AddScoped<NotificationContext>();
             services.AddScoped<IUserProfileService, UserProfileService>();
             return services;
         }
