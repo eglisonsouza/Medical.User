@@ -1,4 +1,5 @@
 ﻿using Medical.User.Application.Models.InputModels;
+using Medical.User.Application.Models.ViewModels;
 using Medical.User.Domain.Models.Entities;
 using Medical.User.Domain.Models.Enuns;
 
@@ -32,6 +33,18 @@ namespace Medical.User.UnitTest.Mock
         public static LoginInputModel GetLoginInputModel()
         {
             return new LoginInputModel { Username = "TestUser", Password = "TestPassword", Role = RoleType.Doctor };
+        }
+
+        public static UserViewModel GetUserViewModel()
+        {
+            return new UserViewModel()
+            {
+                Email = "eglison.souza@gmail.com",
+                Role = RoleType.Doctor,
+                Username = "eglisonsouza",
+                Id = Guid.NewGuid(),
+                UrlProfile = "url"
+            };
         }
     }
 }
