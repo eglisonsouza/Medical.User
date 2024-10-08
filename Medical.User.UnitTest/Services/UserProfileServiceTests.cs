@@ -17,11 +17,13 @@ namespace Medical.User.UnitTest.Services
         private readonly UserProfileService _service;
         private readonly IMapper _mapper;
         private readonly NotificationContext _notificationContext;
+
         public UserProfileServiceTests()
         {
             _repository = Substitute.For<IUserRepository>();
             _mapper = Substitute.For<IMapper>();
             _notificationContext = new NotificationContext();
+
             _service = new UserProfileService(_repository, _mapper, _notificationContext);
         }
 
